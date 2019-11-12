@@ -15,7 +15,7 @@ export function rotateRadians(deltaLambda, deltaPhi, deltaGamma) {
 }
 
 function forwardRotationLambda(deltaLambda) {
-  return function(lambda, phi) {
+  return (lambda, phi) => {
     return lambda += deltaLambda, [lambda > pi ? lambda - tau : lambda < -pi ? lambda + tau : lambda, phi];
   };
 }
@@ -44,7 +44,7 @@ function rotationPhiGamma(deltaPhi, deltaGamma) {
     ];
   }
 
-  rotation.invert = function(lambda, phi) {
+  rotation.invert = (lambda, phi) => {
     var cosPhi = cos(phi),
         x = cos(lambda) * cosPhi,
         y = sin(lambda) * cosPhi,
@@ -67,7 +67,7 @@ export default function(rotate) {
     return coordinates[0] *= degrees, coordinates[1] *= degrees, coordinates;
   }
 
-  forward.invert = function(coordinates) {
+  forward.invert = coordinates => {
     coordinates = rotate.invert(coordinates[0] * radians, coordinates[1] * radians);
     return coordinates[0] *= degrees, coordinates[1] *= degrees, coordinates;
   };

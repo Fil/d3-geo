@@ -9,7 +9,7 @@ export function naturalEarth1Raw(lambda, phi) {
   ];
 }
 
-naturalEarth1Raw.invert = function(x, y) {
+naturalEarth1Raw.invert = (x, y) => {
   var phi = y, i = 25, delta;
   do {
     var phi2 = phi * phi, phi4 = phi2 * phi2;

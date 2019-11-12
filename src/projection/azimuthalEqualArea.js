@@ -2,11 +2,11 @@ import {asin, sqrt} from "../math.js";
 import {azimuthalRaw, azimuthalInvert} from "./azimuthal.js";
 import projection from "./index.js";
 
-export var azimuthalEqualAreaRaw = azimuthalRaw(function(cxcy) {
+export var azimuthalEqualAreaRaw = azimuthalRaw(cxcy => {
   return sqrt(2 / (1 + cxcy));
 });
 
-azimuthalEqualAreaRaw.invert = azimuthalInvert(function(z) {
+azimuthalEqualAreaRaw.invert = azimuthalInvert(z => {
   return 2 * asin(z / 2);
 });
 

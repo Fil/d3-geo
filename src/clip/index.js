@@ -5,7 +5,7 @@ import polygonContains from "../polygonContains.js";
 import {merge} from "d3-array";
 
 export default function(pointVisible, clipLine, interpolate, start) {
-  return function(sink) {
+  return sink => {
     var line = clipLine(sink),
         ringBuffer = clipBuffer(),
         ringSink = clipLine(ringBuffer),

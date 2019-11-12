@@ -3,12 +3,12 @@ import {abs, ceil, epsilon} from "./math.js";
 
 function graticuleX(y0, y1, dy) {
   var y = range(y0, y1 - epsilon, dy).concat(y1);
-  return function(x) { return y.map(function(y) { return [x, y]; }); };
+  return x => { return y.map(y => { return [x, y]; }); };
 }
 
 function graticuleY(x0, x1, dx) {
   var x = range(x0, x1 - epsilon, dx).concat(x1);
-  return function(y) { return x.map(function(x) { return [x, y]; }); };
+  return y => { return x.map(x => { return [x, y]; }); };
 }
 
 export default function graticule() {
@@ -25,15 +25,15 @@ export default function graticule() {
   function lines() {
     return range(ceil(X0 / DX) * DX, X1, DX).map(X)
         .concat(range(ceil(Y0 / DY) * DY, Y1, DY).map(Y))
-        .concat(range(ceil(x0 / dx) * dx, x1, dx).filter(function(x) { return abs(x % DX) > epsilon; }).map(x))
-        .concat(range(ceil(y0 / dy) * dy, y1, dy).filter(function(y) { return abs(y % DY) > epsilon; }).map(y));
+        .concat(range(ceil(x0 / dx) * dx, x1, dx).filter(x => { return abs(x % DX) > epsilon; }).map(x))
+        .concat(range(ceil(y0 / dy) * dy, y1, dy).filter(y => { return abs(y % DY) > epsilon; }).map(y));
   }
 
-  graticule.lines = function() {
-    return lines().map(function(coordinates) { return {type: "LineString", coordinates: coordinates}; });
+  graticule.lines = () => {
+    return lines().map(coordinates => { return {type: "LineString", coordinates: coordinates}; });
   };
 
-  graticule.outline = function() {
+  graticule.outline = () => {
     return {
       type: "Polygon",
       coordinates: [

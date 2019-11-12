@@ -20,22 +20,22 @@ export default function(projection, context) {
     return contextStream.result();
   }
 
-  path.area = function(object) {
+  path.area = object => {
     stream(object, projectionStream(pathArea));
     return pathArea.result();
   };
 
-  path.measure = function(object) {
+  path.measure = object => {
     stream(object, projectionStream(pathMeasure));
     return pathMeasure.result();
   };
 
-  path.bounds = function(object) {
+  path.bounds = object => {
     stream(object, projectionStream(pathBounds));
     return pathBounds.result();
   };
 
-  path.centroid = function(object) {
+  path.centroid = object => {
     stream(object, projectionStream(pathCentroid));
     return pathCentroid.result();
   };

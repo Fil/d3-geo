@@ -14,7 +14,7 @@ export function conicEquidistantRaw(y0, y1) {
     return [gy * sin(nx), g - gy * cos(nx)];
   }
 
-  project.invert = function(x, y) {
+  project.invert = (x, y) => {
     var gy = g - y;
     return [atan2(x, abs(gy)) / n * sign(gy), g - sign(n) * sqrt(x * x + gy * gy)];
   };

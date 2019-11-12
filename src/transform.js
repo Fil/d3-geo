@@ -5,7 +5,7 @@ export default function(methods) {
 }
 
 export function transformer(methods) {
-  return function(stream) {
+  return stream => {
     var s = new TransformStream;
     for (var key in methods) s[key] = methods[key];
     s.stream = stream;

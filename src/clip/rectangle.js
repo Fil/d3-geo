@@ -48,7 +48,7 @@ export default function clipRectangle(x0, y0, x1, y1) {
         : b[0] - a[0];
   }
 
-  return function(stream) {
+  return stream => {
     var activeStream = stream,
         bufferStream = clipBuffer(),
         segments,

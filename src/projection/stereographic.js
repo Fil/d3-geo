@@ -7,7 +7,7 @@ export function stereographicRaw(x, y) {
   return [cy * sin(x) / k, sin(y) / k];
 }
 
-stereographicRaw.invert = azimuthalInvert(function(z) {
+stereographicRaw.invert = azimuthalInvert(z => {
   return 2 * atan(z);
 });
 

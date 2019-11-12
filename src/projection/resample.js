@@ -46,7 +46,7 @@ function resample(project, delta2) {
       }
     }
   }
-  return function(stream) {
+  return stream => {
     var lambda00, x00, y00, a00, b00, c00, // first point
         lambda0, x0, y0, a0, b0, c0; // previous point
 

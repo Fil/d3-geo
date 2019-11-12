@@ -12,7 +12,7 @@ function fit(projection, fitBounds, object) {
 }
 
 export function fitExtent(projection, extent, object) {
-  return fit(projection, function(b) {
+  return fit(projection, b => {
     var w = extent[1][0] - extent[0][0],
         h = extent[1][1] - extent[0][1],
         k = Math.min(w / (b[1][0] - b[0][0]), h / (b[1][1] - b[0][1])),
@@ -27,7 +27,7 @@ export function fitSize(projection, size, object) {
 }
 
 export function fitWidth(projection, width, object) {
-  return fit(projection, function(b) {
+  return fit(projection, b => {
     var w = +width,
         k = w / (b[1][0] - b[0][0]),
         x = (w - k * (b[1][0] + b[0][0])) / 2,
@@ -37,7 +37,7 @@ export function fitWidth(projection, width, object) {
 }
 
 export function fitHeight(projection, height, object) {
-  return fit(projection, function(b) {
+  return fit(projection, b => {
     var h = +height,
         k = h / (b[1][1] - b[0][1]),
         x = -k * b[0][0],

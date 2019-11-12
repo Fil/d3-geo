@@ -38,7 +38,7 @@ export default function() {
         || (hawaiiPoint.point(x, y), point);
   }
 
-  albersUsa.invert = function(coordinates) {
+  albersUsa.invert = coordinates => {
     var k = lower48.scale(),
         t = lower48.translate(),
         x = (coordinates[0] - t[0]) / k,
@@ -48,7 +48,7 @@ export default function() {
         : lower48).invert(coordinates);
   };
 
-  albersUsa.stream = function(stream) {
+  albersUsa.stream = stream => {
     return cache && cacheStream === stream ? cache : cache = multiplex([lower48.stream(cacheStream = stream), alaska.stream(stream), hawaii.stream(stream)]);
   };
 
@@ -86,19 +86,19 @@ export default function() {
     return reset();
   };
 
-  albersUsa.fitExtent = function(extent, object) {
+  albersUsa.fitExtent = (extent, object) => {
     return fitExtent(albersUsa, extent, object);
   };
 
-  albersUsa.fitSize = function(size, object) {
+  albersUsa.fitSize = (size, object) => {
     return fitSize(albersUsa, size, object);
   };
 
-  albersUsa.fitWidth = function(width, object) {
+  albersUsa.fitWidth = (width, object) => {
     return fitWidth(albersUsa, width, object);
   };
 
-  albersUsa.fitHeight = function(height, object) {
+  albersUsa.fitHeight = (height, object) => {
     return fitHeight(albersUsa, height, object);
   };
 

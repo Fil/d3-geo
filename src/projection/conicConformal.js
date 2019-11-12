@@ -20,7 +20,7 @@ export function conicConformalRaw(y0, y1) {
     return [r * sin(n * x), f - r * cos(n * x)];
   }
 
-  project.invert = function(x, y) {
+  project.invert = (x, y) => {
     var fy = f - y, r = sign(n) * sqrt(x * x + fy * fy);
     return [atan2(x, abs(fy)) / n * sign(fy), 2 * atan(pow(f / r, 1 / n)) - halfPi];
   };

@@ -15,7 +15,7 @@ export function conicEqualAreaRaw(y0, y1) {
     return [r * sin(x *= n), r0 - r * cos(x)];
   }
 
-  project.invert = function(x, y) {
+  project.invert = (x, y) => {
     var r0y = r0 - y;
     return [atan2(x, abs(r0y)) / n * sign(r0y), asin((c - (x * x + r0y * r0y) * n * n) / (2 * n))];
   };

@@ -16,7 +16,7 @@ export function equalEarthRaw(lambda, phi) {
   ];
 }
 
-equalEarthRaw.invert = function(x, y) {
+equalEarthRaw.invert = (x, y) => {
   var l = y, l2 = l * l, l6 = l2 * l2 * l2;
   for (var i = 0, delta, fy, fpy; i < iterations; ++i) {
     fy = l * (A1 + A2 * l2 + l6 * (A3 + A4 * l2)) - y;

@@ -28,7 +28,7 @@ function scaleTranslate(k, dx, dy) {
   function transform(x, y) {
     return [dx + k * x, dy - k * y];
   }
-  transform.invert = function(x, y) {
+  transform.invert = (x, y) => {
     return [(x - dx) / k, (dy - y) / k];
   };
   return transform;
@@ -46,14 +46,14 @@ function scaleTranslateRotate(k, dx, dy, alpha) {
   function transform(x, y) {
     return [a * x - b * y + dx, dy - b * x - a * y];
   }
-  transform.invert = function(x, y) {
+  transform.invert = (x, y) => {
     return [ai * x - bi * y + ci, fi - bi * x - ai * y];
   };
   return transform;
 }
 
 export default function projection(project) {
-  return projectionMutator(function() { return project; })();
+  return projectionMutator(() => { return project; })();
 }
 
 export function projectionMutator(projectAt) {
@@ -81,7 +81,7 @@ export function projectionMutator(projectAt) {
     return point && [point[0] * degrees, point[1] * degrees];
   }
 
-  projection.stream = function(stream) {
+  projection.stream = stream => {
     return cache && cacheStream === stream ? cache : cache = transformRadians(transformRotate(rotate)(preclip(projectResample(postclip(cacheStream = stream)))));
   };
 
@@ -125,19 +125,19 @@ export function projectionMutator(projectAt) {
     return arguments.length ? (projectResample = resample(projectTransform, delta2 = _ * _), reset()) : sqrt(delta2);
   };
 
-  projection.fitExtent = function(extent, object) {
+  projection.fitExtent = (extent, object) => {
     return fitExtent(projection, extent, object);
   };
 
-  projection.fitSize = function(size, object) {
+  projection.fitSize = (size, object) => {
     return fitSize(projection, size, object);
   };
 
-  projection.fitWidth = function(width, object) {
+  projection.fitWidth = (width, object) => {
     return fitWidth(projection, width, object);
   };
 
-  projection.fitHeight = function(height, object) {
+  projection.fitHeight = (height, object) => {
     return fitHeight(projection, height, object);
   };
 

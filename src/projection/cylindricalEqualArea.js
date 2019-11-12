@@ -7,7 +7,7 @@ export function cylindricalEqualAreaRaw(phi0) {
     return [lambda * cosPhi0, sin(phi) / cosPhi0];
   }
 
-  forward.invert = function(x, y) {
+  forward.invert = (x, y) => {
     return [x / cosPhi0, asin(y * cosPhi0)];
   };
 

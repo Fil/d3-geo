@@ -18,7 +18,7 @@ export default function(segments, compareIntersection, startInside, interpolate,
       i,
       n;
 
-  segments.forEach(function(segment) {
+  segments.forEach(segment => {
     if ((n = segment.length - 1) <= 0) return;
     var n, p0 = segment[0], p1 = segment[n], x;
 

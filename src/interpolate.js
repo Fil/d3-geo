@@ -16,7 +16,7 @@ export default function(a, b) {
       d = 2 * asin(sqrt(haversin(y1 - y0) + cy0 * cy1 * haversin(x1 - x0))),
       k = sin(d);
 
-  var interpolate = d ? function(t) {
+  var interpolate = d ? t => {
     var B = sin(t *= d) / k,
         A = sin(d - t) / k,
         x = A * kx0 + B * kx1,
@@ -26,7 +26,7 @@ export default function(a, b) {
       atan2(y, x) * degrees,
       atan2(z, sqrt(x * x + y * y)) * degrees
     ];
-  } : function() {
+  } : () => {
     return [x0 * degrees, y0 * degrees];
   };
 
