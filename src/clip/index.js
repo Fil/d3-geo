@@ -18,14 +18,14 @@ export default function(pointVisible, clipLine, interpolate, start) {
       point: point,
       lineStart: lineStart,
       lineEnd: lineEnd,
-      polygonStart: function() {
+      polygonStart() {
         clip.point = pointRing;
         clip.lineStart = ringStart;
         clip.lineEnd = ringEnd;
         segments = [];
         polygon = [];
       },
-      polygonEnd: function() {
+      polygonEnd() {
         clip.point = point;
         clip.lineStart = lineStart;
         clip.lineEnd = lineEnd;
@@ -43,7 +43,7 @@ export default function(pointVisible, clipLine, interpolate, start) {
         if (polygonStarted) sink.polygonEnd(), polygonStarted = false;
         segments = polygon = null;
       },
-      sphere: function() {
+      sphere() {
         sink.polygonStart();
         sink.lineStart();
         interpolate(null, null, 1, sink);

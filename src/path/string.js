@@ -5,24 +5,24 @@ export default function PathString() {
 PathString.prototype = {
   _radius: 4.5,
   _circle: circle(4.5),
-  pointRadius: function(_) {
+  pointRadius(_) {
     if ((_ = +_) !== this._radius) this._radius = _, this._circle = null;
     return this;
   },
-  polygonStart: function() {
+  polygonStart() {
     this._line = 0;
   },
-  polygonEnd: function() {
+  polygonEnd() {
     this._line = NaN;
   },
-  lineStart: function() {
+  lineStart() {
     this._point = 0;
   },
-  lineEnd: function() {
+  lineEnd() {
     if (this._line === 0) this._string.push("Z");
     this._point = NaN;
   },
-  point: function(x, y) {
+  point(x, y) {
     switch (this._point) {
       case 0: {
         this._string.push("M", x, ",", y);
@@ -40,7 +40,7 @@ PathString.prototype = {
       }
     }
   },
-  result: function() {
+  result() {
     if (this._string.length) {
       var result = this._string.join("");
       this._string = [];

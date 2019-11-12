@@ -11,20 +11,20 @@ var lengthSum = adder(),
 
 var lengthStream = {
   point: noop,
-  lineStart: function() {
+  lineStart() {
     lengthStream.point = lengthPointFirst;
   },
-  lineEnd: function() {
+  lineEnd() {
     if (lengthRing) lengthPoint(x00, y00);
     lengthStream.point = noop;
   },
-  polygonStart: function() {
+  polygonStart() {
     lengthRing = true;
   },
-  polygonEnd: function() {
+  polygonEnd() {
     lengthRing = null;
   },
-  result: function() {
+  result() {
     var length = +lengthSum;
     lengthSum.reset();
     return length;

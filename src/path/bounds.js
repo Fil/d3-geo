@@ -11,7 +11,7 @@ var boundsStream = {
   lineEnd: noop,
   polygonStart: noop,
   polygonEnd: noop,
-  result: function() {
+  result() {
     var bounds = [[x0, y0], [x1, y1]];
     x1 = y1 = -(y0 = x0 = Infinity);
     return bounds;

@@ -20,16 +20,16 @@ var centroidStream = {
   point: centroidPoint,
   lineStart: centroidLineStart,
   lineEnd: centroidLineEnd,
-  polygonStart: function() {
+  polygonStart() {
     centroidStream.lineStart = centroidRingStart;
     centroidStream.lineEnd = centroidRingEnd;
   },
-  polygonEnd: function() {
+  polygonEnd() {
     centroidStream.point = centroidPoint;
     centroidStream.lineStart = centroidLineStart;
     centroidStream.lineEnd = centroidLineEnd;
   },
-  result: function() {
+  result() {
     var centroid = Z2 ? [X2 / Z2, Y2 / Z2]
         : Z1 ? [X1 / Z1, Y1 / Z1]
         : Z0 ? [X0 / Z0, Y0 / Z0]

@@ -13,16 +13,16 @@ var areaStream = {
   point: noop,
   lineStart: noop,
   lineEnd: noop,
-  polygonStart: function() {
+  polygonStart() {
     areaStream.lineStart = areaRingStart;
     areaStream.lineEnd = areaRingEnd;
   },
-  polygonEnd: function() {
+  polygonEnd() {
     areaStream.lineStart = areaStream.lineEnd = areaStream.point = noop;
     areaSum.add(abs(areaRingSum));
     areaRingSum.reset();
   },
-  result: function() {
+  result() {
     var area = areaSum / 2;
     areaSum.reset();
     return area;

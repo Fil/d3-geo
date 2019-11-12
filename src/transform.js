@@ -17,10 +17,10 @@ function TransformStream() {}
 
 TransformStream.prototype = {
   constructor: TransformStream,
-  point: function(x, y) { this.stream.point(x, y); },
-  sphere: function() { this.stream.sphere(); },
-  lineStart: function() { this.stream.lineStart(); },
-  lineEnd: function() { this.stream.lineEnd(); },
-  polygonStart: function() { this.stream.polygonStart(); },
-  polygonEnd: function() { this.stream.polygonEnd(); }
+  point(x, y) { this.stream.point(x, y); },
+  sphere() { this.stream.sphere(); },
+  lineStart() { this.stream.lineStart(); },
+  lineEnd() { this.stream.lineEnd(); },
+  polygonStart() { this.stream.polygonStart(); },
+  polygonEnd() { this.stream.polygonEnd(); }
 };

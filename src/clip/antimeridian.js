@@ -18,11 +18,11 @@ function clipAntimeridianLine(stream) {
       clean; // no intersections
 
   return {
-    lineStart: function() {
+    lineStart() {
       stream.lineStart();
       clean = 1;
     },
-    point: function(lambda1, phi1) {
+    point(lambda1, phi1) {
       var sign1 = lambda1 > 0 ? pi : -pi,
           delta = abs(lambda1 - lambda0);
       if (abs(delta - pi) < epsilon) { // line crosses a pole
@@ -46,11 +46,11 @@ function clipAntimeridianLine(stream) {
       stream.point(lambda0 = lambda1, phi0 = phi1);
       sign0 = sign1;
     },
-    lineEnd: function() {
+    lineEnd() {
       stream.lineEnd();
       lambda0 = phi0 = NaN;
     },
-    clean: function() {
+    clean() {
       return 2 - clean; // if intersections, rejoin first and last segments
     }
   };

@@ -16,17 +16,17 @@ export var areaStream = {
   point: noop,
   lineStart: noop,
   lineEnd: noop,
-  polygonStart: function() {
+  polygonStart() {
     areaRingSum.reset();
     areaStream.lineStart = areaRingStart;
     areaStream.lineEnd = areaRingEnd;
   },
-  polygonEnd: function() {
+  polygonEnd() {
     var areaRing = +areaRingSum;
     areaSum.add(areaRing < 0 ? tau + areaRing : areaRing);
     this.lineStart = this.lineEnd = this.point = noop;
   },
-  sphere: function() {
+  sphere() {
     areaSum.add(tau);
   }
 };

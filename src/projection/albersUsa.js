@@ -8,12 +8,12 @@ import {fitExtent, fitSize, fitWidth, fitHeight} from "./fit.js";
 function multiplex(streams) {
   var n = streams.length;
   return {
-    point: function(x, y) { var i = -1; while (++i < n) streams[i].point(x, y); },
-    sphere: function() { var i = -1; while (++i < n) streams[i].sphere(); },
-    lineStart: function() { var i = -1; while (++i < n) streams[i].lineStart(); },
-    lineEnd: function() { var i = -1; while (++i < n) streams[i].lineEnd(); },
-    polygonStart: function() { var i = -1; while (++i < n) streams[i].polygonStart(); },
-    polygonEnd: function() { var i = -1; while (++i < n) streams[i].polygonEnd(); }
+    point(x, y) { var i = -1; while (++i < n) streams[i].point(x, y); },
+    sphere() { var i = -1; while (++i < n) streams[i].sphere(); },
+    lineStart() { var i = -1; while (++i < n) streams[i].lineStart(); },
+    lineEnd() { var i = -1; while (++i < n) streams[i].lineEnd(); },
+    polygonStart() { var i = -1; while (++i < n) streams[i].polygonStart(); },
+    polygonEnd() { var i = -1; while (++i < n) streams[i].polygonEnd(); }
   };
 }
 
@@ -28,7 +28,7 @@ export default function() {
       lower48 = albers(), lower48Point,
       alaska = conicEqualArea().rotate([154, 0]).center([-2, 58.5]).parallels([55, 65]), alaskaPoint, // EPSG:3338
       hawaii = conicEqualArea().rotate([157, 0]).center([-3, 19.9]).parallels([8, 18]), hawaiiPoint, // ESRI:102007
-      point, pointStream = {point: function(x, y) { point = [x, y]; }};
+      point, pointStream = {point(x, y) { point = [x, y]; }};
 
   function albersUsa(coordinates) {
     var x = coordinates[0], y = coordinates[1];

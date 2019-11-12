@@ -3,10 +3,10 @@ import {default as distance} from "./distance.js";
 import {epsilon2, radians} from "./math.js";
 
 var containsObjectType = {
-  Feature: function(object, point) {
+  Feature(object, point) {
     return containsGeometry(object.geometry, point);
   },
-  FeatureCollection: function(object, point) {
+  FeatureCollection(object, point) {
     var features = object.features, i = -1, n = features.length;
     while (++i < n) if (containsGeometry(features[i].geometry, point)) return true;
     return false;
@@ -14,34 +14,34 @@ var containsObjectType = {
 };
 
 var containsGeometryType = {
-  Sphere: function() {
+  Sphere() {
     return true;
   },
-  Point: function(object, point) {
+  Point(object, point) {
     return containsPoint(object.coordinates, point);
   },
-  MultiPoint: function(object, point) {
+  MultiPoint(object, point) {
     var coordinates = object.coordinates, i = -1, n = coordinates.length;
     while (++i < n) if (containsPoint(coordinates[i], point)) return true;
     return false;
   },
-  LineString: function(object, point) {
+  LineString(object, point) {
     return containsLine(object.coordinates, point);
   },
-  MultiLineString: function(object, point) {
+  MultiLineString(object, point) {
     var coordinates = object.coordinates, i = -1, n = coordinates.length;
     while (++i < n) if (containsLine(coordinates[i], point)) return true;
     return false;
   },
-  Polygon: function(object, point) {
+  Polygon(object, point) {
     return containsPolygon(object.coordinates, point);
   },
-  MultiPolygon: function(object, point) {
+  MultiPolygon(object, point) {
     var coordinates = object.coordinates, i = -1, n = coordinates.length;
     while (++i < n) if (containsPolygon(coordinates[i], point)) return true;
     return false;
   },
-  GeometryCollection: function(object, point) {
+  GeometryCollection(object, point) {
     var geometries = object.geometries, i = -1, n = geometries.length;
     while (++i < n) if (containsGeometry(geometries[i], point)) return true;
     return false;

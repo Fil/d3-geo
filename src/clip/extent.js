@@ -10,10 +10,10 @@ export default function() {
       clip;
 
   return clip = {
-    stream: function(stream) {
+    stream(stream) {
       return cache && cacheStream === stream ? cache : cache = clipRectangle(x0, y0, x1, y1)(cacheStream = stream);
     },
-    extent: function(_) {
+    extent(_) {
       return arguments.length ? (x0 = +_[0][0], y0 = +_[0][1], x1 = +_[1][0], y1 = +_[1][1], cache = cacheStream = null, clip) : [[x0, y0], [x1, y1]];
     }
   };

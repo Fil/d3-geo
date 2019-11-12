@@ -11,7 +11,7 @@ export default function(project, delta2) {
 
 function resampleNone(project) {
   return transformer({
-    point: function(x, y) {
+    point(x, y) {
       x = project(x, y);
       this.stream.point(x[0], x[1]);
     }
@@ -54,8 +54,8 @@ function resample(project, delta2) {
       point: point,
       lineStart: lineStart,
       lineEnd: lineEnd,
-      polygonStart: function() { stream.polygonStart(); resampleStream.lineStart = ringStart; },
-      polygonEnd: function() { stream.polygonEnd(); resampleStream.lineStart = lineStart; }
+      polygonStart() { stream.polygonStart(); resampleStream.lineStart = ringStart; },
+      polygonEnd() { stream.polygonEnd(); resampleStream.lineStart = lineStart; }
     };
 
     function point(x, y) {

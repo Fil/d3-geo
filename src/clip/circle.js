@@ -29,11 +29,11 @@ export default function(radius) {
         v00, // visibility of first point
         clean; // no intersections
     return {
-      lineStart: function() {
+      lineStart() {
         v00 = v0 = false;
         clean = 1;
       },
-      point: function(lambda, phi) {
+      point(lambda, phi) {
         var point1 = [lambda, phi],
             point2,
             v = visible(lambda, phi),
@@ -89,13 +89,13 @@ export default function(radius) {
         }
         point0 = point1, v0 = v, c0 = c;
       },
-      lineEnd: function() {
+      lineEnd() {
         if (v0) stream.lineEnd();
         point0 = null;
       },
       // Rejoin first and last segments if there were intersections and the first
       // and last points were visible.
-      clean: function() {
+      clean() {
         return clean | ((v00 && v0) << 1);
       }
     };

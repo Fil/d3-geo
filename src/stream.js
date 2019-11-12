@@ -5,42 +5,42 @@ function streamGeometry(geometry, stream) {
 }
 
 var streamObjectType = {
-  Feature: function(object, stream) {
+  Feature(object, stream) {
     streamGeometry(object.geometry, stream);
   },
-  FeatureCollection: function(object, stream) {
+  FeatureCollection(object, stream) {
     var features = object.features, i = -1, n = features.length;
     while (++i < n) streamGeometry(features[i].geometry, stream);
   }
 };
 
 var streamGeometryType = {
-  Sphere: function(object, stream) {
+  Sphere(object, stream) {
     stream.sphere();
   },
-  Point: function(object, stream) {
+  Point(object, stream) {
     object = object.coordinates;
     stream.point(object[0], object[1], object[2]);
   },
-  MultiPoint: function(object, stream) {
+  MultiPoint(object, stream) {
     var coordinates = object.coordinates, i = -1, n = coordinates.length;
     while (++i < n) object = coordinates[i], stream.point(object[0], object[1], object[2]);
   },
-  LineString: function(object, stream) {
+  LineString(object, stream) {
     streamLine(object.coordinates, stream, 0);
   },
-  MultiLineString: function(object, stream) {
+  MultiLineString(object, stream) {
     var coordinates = object.coordinates, i = -1, n = coordinates.length;
     while (++i < n) streamLine(coordinates[i], stream, 0);
   },
-  Polygon: function(object, stream) {
+  Polygon(object, stream) {
     streamPolygon(object.coordinates, stream);
   },
-  MultiPolygon: function(object, stream) {
+  MultiPolygon(object, stream) {
     var coordinates = object.coordinates, i = -1, n = coordinates.length;
     while (++i < n) streamPolygon(coordinates[i], stream);
   },
-  GeometryCollection: function(object, stream) {
+  GeometryCollection(object, stream) {
     var geometries = object.geometries, i = -1, n = geometries.length;
     while (++i < n) streamGeometry(geometries[i], stream);
   }

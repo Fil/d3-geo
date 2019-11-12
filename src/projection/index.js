@@ -10,14 +10,14 @@ import {fitExtent, fitSize, fitWidth, fitHeight} from "./fit.js";
 import resample from "./resample.js";
 
 var transformRadians = transformer({
-  point: function(x, y) {
+  point(x, y) {
     this.stream.point(x * radians, y * radians);
   }
 });
 
 function transformRotate(rotate) {
   return transformer({
-    point: function(x, y) {
+    point(x, y) {
       var r = rotate(x, y);
       return this.stream.point(r[0], r[1]);
     }

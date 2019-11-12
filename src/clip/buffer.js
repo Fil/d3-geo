@@ -4,17 +4,17 @@ export default function() {
   var lines = [],
       line;
   return {
-    point: function(x, y) {
+    point(x, y) {
       line.push([x, y]);
     },
-    lineStart: function() {
+    lineStart() {
       lines.push(line = []);
     },
     lineEnd: noop,
-    rejoin: function() {
+    rejoin() {
       if (lines.length > 1) lines.push(lines.pop().concat(lines.shift()));
     },
-    result: function() {
+    result() {
       var result = lines;
       lines = [];
       line = null;

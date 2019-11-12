@@ -16,14 +16,14 @@ var boundsStream = {
   point: boundsPoint,
   lineStart: boundsLineStart,
   lineEnd: boundsLineEnd,
-  polygonStart: function() {
+  polygonStart() {
     boundsStream.point = boundsRingPoint;
     boundsStream.lineStart = boundsRingStart;
     boundsStream.lineEnd = boundsRingEnd;
     deltaSum.reset();
     areaStream.polygonStart();
   },
-  polygonEnd: function() {
+  polygonEnd() {
     areaStream.polygonEnd();
     boundsStream.point = boundsPoint;
     boundsStream.lineStart = boundsLineStart;
@@ -33,7 +33,7 @@ var boundsStream = {
     else if (deltaSum < -epsilon) phi0 = -90;
     range[0] = lambda0, range[1] = lambda1;
   },
-  sphere: function() {
+  sphere() {
     lambda0 = -(lambda1 = 180), phi0 = -(phi1 = 90);
   }
 };

@@ -15,17 +15,17 @@ function Adder() {
 
 Adder.prototype = {
   constructor: Adder,
-  reset: function() {
+  reset() {
     this.s = // rounded value
     this.t = 0; // exact error
   },
-  add: function(y) {
+  add(y) {
     add(temp, y, this.t);
     add(this, temp.s, this.s);
     if (this.s) this.t += temp.t;
     else this.s = temp.t;
   },
-  valueOf: function() {
+  valueOf() {
     return this.s;
   }
 };

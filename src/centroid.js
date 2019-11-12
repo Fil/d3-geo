@@ -14,11 +14,11 @@ var centroidStream = {
   point: centroidPoint,
   lineStart: centroidLineStart,
   lineEnd: centroidLineEnd,
-  polygonStart: function() {
+  polygonStart() {
     centroidStream.lineStart = centroidRingStart;
     centroidStream.lineEnd = centroidRingEnd;
   },
-  polygonEnd: function() {
+  polygonEnd() {
     centroidStream.lineStart = centroidLineStart;
     centroidStream.lineEnd = centroidLineEnd;
   }
