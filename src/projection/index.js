@@ -142,8 +142,8 @@ export function projectionMutator(projectAt) {
     return projection;
   }
 
-  return function() {
-    project = projectAt.apply(this, arguments);
+  return function(...args) {
+    project = projectAt.apply(this, args);
     projection.invert = project.invert && invert;
     return recenter();
   };

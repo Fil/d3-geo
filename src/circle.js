@@ -44,10 +44,10 @@ export default function() {
     x[0] *= degrees, x[1] *= degrees;
   }
 
-  function circle() {
-    var c = center.apply(this, arguments),
-        r = radius.apply(this, arguments) * radians,
-        p = precision.apply(this, arguments) * radians;
+  function circle(...args) {
+    var c = center.apply(this, args),
+        r = radius.apply(this, args) * radians,
+        p = precision.apply(this, args) * radians;
     ring = [];
     rotate = rotateRadians(-c[0] * radians, -c[1] * radians, 0).invert;
     circleStream(stream, r, p, 1);
