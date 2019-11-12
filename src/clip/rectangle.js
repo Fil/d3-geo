@@ -60,11 +60,11 @@ export default function clipRectangle(x0, y0, x1, y1) {
         clean;
 
     var clipStream = {
-      point: point,
-      lineStart: lineStart,
-      lineEnd: lineEnd,
-      polygonStart: polygonStart,
-      polygonEnd: polygonEnd
+      point,
+      lineStart,
+      lineEnd,
+      polygonStart,
+      polygonEnd
     };
 
     function point(x, y) {

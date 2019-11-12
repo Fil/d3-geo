@@ -51,9 +51,9 @@ function resample(project, delta2) {
         lambda0, x0, y0, a0, b0, c0; // previous point
 
     var resampleStream = {
-      point: point,
-      lineStart: lineStart,
-      lineEnd: lineEnd,
+      point,
+      lineStart,
+      lineEnd,
       polygonStart() { stream.polygonStart(); resampleStream.lineStart = ringStart; },
       polygonEnd() { stream.polygonEnd(); resampleStream.lineStart = lineStart; }
     };

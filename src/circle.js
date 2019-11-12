@@ -37,7 +37,7 @@ export default function() {
       precision = constant(6),
       ring,
       rotate,
-      stream = {point: point};
+      stream = {point};
 
   function point(x, y) {
     ring.push(x = rotate(x, y));

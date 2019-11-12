@@ -15,9 +15,9 @@ export default function(pointVisible, clipLine, interpolate, start) {
         ring;
 
     var clip = {
-      point: point,
-      lineStart: lineStart,
-      lineEnd: lineEnd,
+      point,
+      lineStart,
+      lineEnd,
       polygonStart() {
         clip.point = pointRing;
         clip.lineStart = ringStart;

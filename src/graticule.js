@@ -31,7 +31,7 @@ export default function graticule() {
 
   graticule.lines = () => lines().map(coordinates => ({
     type: "LineString",
-    coordinates: coordinates
+    coordinates
   }));
 
   graticule.outline = () => ({
