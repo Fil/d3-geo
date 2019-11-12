@@ -15,9 +15,7 @@ export function rotateRadians(deltaLambda, deltaPhi, deltaGamma) {
 }
 
 function forwardRotationLambda(deltaLambda) {
-  return (lambda, phi) => {
-    return lambda += deltaLambda, [lambda > pi ? lambda - tau : lambda < -pi ? lambda + tau : lambda, phi];
-  };
+  return (lambda, phi) => (lambda += deltaLambda, [lambda > pi ? lambda - tau : lambda < -pi ? lambda + tau : lambda, phi]);
 }
 
 function rotationLambda(deltaLambda) {

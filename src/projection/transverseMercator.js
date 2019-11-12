@@ -5,9 +5,7 @@ export function transverseMercatorRaw(lambda, phi) {
   return [log(tan((halfPi + phi) / 2)), -lambda];
 }
 
-transverseMercatorRaw.invert = (x, y) => {
-  return [-y, 2 * atan(exp(x)) - halfPi];
-};
+transverseMercatorRaw.invert = (x, y) => [-y, 2 * atan(exp(x)) - halfPi];
 
 export default function() {
   var m = mercatorProjection(transverseMercatorRaw),

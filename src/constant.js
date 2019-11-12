@@ -1,5 +1,3 @@
 export default function(x) {
-  return () => {
-    return x;
-  };
+  return () => x;
 }

@@ -28,9 +28,7 @@ function scaleTranslate(k, dx, dy) {
   function transform(x, y) {
     return [dx + k * x, dy - k * y];
   }
-  transform.invert = (x, y) => {
-    return [(x - dx) / k, (dy - y) / k];
-  };
+  transform.invert = (x, y) => [(x - dx) / k, (dy - y) / k];
   return transform;
 }
 
@@ -46,14 +44,12 @@ function scaleTranslateRotate(k, dx, dy, alpha) {
   function transform(x, y) {
     return [a * x - b * y + dx, dy - b * x - a * y];
   }
-  transform.invert = (x, y) => {
-    return [ai * x - bi * y + ci, fi - bi * x - ai * y];
-  };
+  transform.invert = (x, y) => [ai * x - bi * y + ci, fi - bi * x - ai * y];
   return transform;
 }
 
 export default function projection(project) {
-  return projectionMutator(() => { return project; })();
+  return projectionMutator(() => project)();
 }
 
 export function projectionMutator(projectAt) {
@@ -81,9 +77,7 @@ export function projectionMutator(projectAt) {
     return point && [point[0] * degrees, point[1] * degrees];
   }
 
-  projection.stream = stream => {
-    return cache && cacheStream === stream ? cache : cache = transformRadians(transformRotate(rotate)(preclip(projectResample(postclip(cacheStream = stream)))));
-  };
+  projection.stream = stream => cache && cacheStream === stream ? cache : cache = transformRadians(transformRotate(rotate)(preclip(projectResample(postclip(cacheStream = stream)))));
 
   projection.preclip = function(_) {
     return arguments.length ? (preclip = _, theta = undefined, reset()) : preclip;
@@ -125,21 +119,13 @@ export function projectionMutator(projectAt) {
     return arguments.length ? (projectResample = resample(projectTransform, delta2 = _ * _), reset()) : sqrt(delta2);
   };
 
-  projection.fitExtent = (extent, object) => {
-    return fitExtent(projection, extent, object);
-  };
+  projection.fitExtent = (extent, object) => fitExtent(projection, extent, object);
 
-  projection.fitSize = (size, object) => {
-    return fitSize(projection, size, object);
-  };
+  projection.fitSize = (size, object) => fitSize(projection, size, object);
 
-  projection.fitWidth = (width, object) => {
-    return fitWidth(projection, width, object);
-  };
+  projection.fitWidth = (width, object) => fitWidth(projection, width, object);
 
-  projection.fitHeight = (height, object) => {
-    return fitHeight(projection, height, object);
-  };
+  projection.fitHeight = (height, object) => fitHeight(projection, height, object);
 
   function recenter() {
     var center = scaleTranslateRotate(k, 0, 0, alpha).apply(null, project(lambda, phi)),

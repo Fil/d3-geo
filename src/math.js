@@ -18,7 +18,7 @@ export var floor = Math.floor;
 export var log = Math.log;
 export var pow = Math.pow;
 export var sin = Math.sin;
-export var sign = Math.sign || (x => { return x > 0 ? 1 : x < 0 ? -1 : 0; });
+export var sign = Math.sign || (x => x > 0 ? 1 : x < 0 ? -1 : 0);
 export var sqrt = Math.sqrt;
 export var tan = Math.tan;
 

@@ -48,9 +48,7 @@ export default function() {
         : lower48).invert(coordinates);
   };
 
-  albersUsa.stream = stream => {
-    return cache && cacheStream === stream ? cache : cache = multiplex([lower48.stream(cacheStream = stream), alaska.stream(stream), hawaii.stream(stream)]);
-  };
+  albersUsa.stream = stream => cache && cacheStream === stream ? cache : cache = multiplex([lower48.stream(cacheStream = stream), alaska.stream(stream), hawaii.stream(stream)]);
 
   albersUsa.precision = function(_) {
     if (!arguments.length) return lower48.precision();
@@ -86,21 +84,13 @@ export default function() {
     return reset();
   };
 
-  albersUsa.fitExtent = (extent, object) => {
-    return fitExtent(albersUsa, extent, object);
-  };
+  albersUsa.fitExtent = (extent, object) => fitExtent(albersUsa, extent, object);
 
-  albersUsa.fitSize = (size, object) => {
-    return fitSize(albersUsa, size, object);
-  };
+  albersUsa.fitSize = (size, object) => fitSize(albersUsa, size, object);
 
-  albersUsa.fitWidth = (width, object) => {
-    return fitWidth(albersUsa, width, object);
-  };
+  albersUsa.fitWidth = (width, object) => fitWidth(albersUsa, width, object);
 
-  albersUsa.fitHeight = (height, object) => {
-    return fitHeight(albersUsa, height, object);
-  };
+  albersUsa.fitHeight = (height, object) => fitHeight(albersUsa, height, object);
 
   function reset() {
     cache = cacheStream = null;

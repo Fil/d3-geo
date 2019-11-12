@@ -2,7 +2,7 @@ import clip from "./index.js";
 import {abs, atan, cos, epsilon, halfPi, pi, sin} from "../math.js";
 
 export default clip(
-  () => { return true; },
+  () => true,
   clipAntimeridianLine,
   clipAntimeridianInterpolate,
   [-pi, -halfPi]

@@ -26,9 +26,7 @@ export default function(a, b) {
       atan2(y, x) * degrees,
       atan2(z, sqrt(x * x + y * y)) * degrees
     ];
-  } : () => {
-    return [x0 * degrees, y0 * degrees];
-  };
+  } : () => [x0 * degrees, y0 * degrees];
 
   interpolate.distance = d;
 
