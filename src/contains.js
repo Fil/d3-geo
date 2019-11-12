@@ -3,8 +3,8 @@ import {default as distance} from "./distance.js";
 import {epsilon2, radians} from "./math.js";
 
 const containsObjectType = {
-  Feature(object, point) {
-    return containsGeometry(object.geometry, point);
+  Feature({geometry}, point) {
+    return containsGeometry(geometry, point);
   },
   FeatureCollection(object, point) {
     const features = object.features;
@@ -19,8 +19,8 @@ const containsGeometryType = {
   Sphere() {
     return true;
   },
-  Point(object, point) {
-    return containsPoint(object.coordinates, point);
+  Point({coordinates}, point) {
+    return containsPoint(coordinates, point);
   },
   MultiPoint(object, point) {
     const coordinates = object.coordinates;
@@ -29,8 +29,8 @@ const containsGeometryType = {
     while (++i < n) if (containsPoint(coordinates[i], point)) return true;
     return false;
   },
-  LineString(object, point) {
-    return containsLine(object.coordinates, point);
+  LineString({coordinates}, point) {
+    return containsLine(coordinates, point);
   },
   MultiLineString(object, point) {
     const coordinates = object.coordinates;
@@ -39,8 +39,8 @@ const containsGeometryType = {
     while (++i < n) if (containsLine(coordinates[i], point)) return true;
     return false;
   },
-  Polygon(object, point) {
-    return containsPolygon(object.coordinates, point);
+  Polygon({coordinates}, point) {
+    return containsPolygon(coordinates, point);
   },
   MultiPolygon(object, point) {
     const coordinates = object.coordinates;

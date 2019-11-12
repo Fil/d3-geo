@@ -121,8 +121,8 @@ export default function(pointVisible, clipLine, interpolate, start) {
   };
 }
 
-function validSegment(segment) {
-  return segment.length > 1;
+function validSegment({length}) {
+  return length > 1;
 }
 
 // Intersections are sorted along the clip edge. For both antimeridian cutting

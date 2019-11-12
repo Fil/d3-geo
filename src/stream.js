@@ -5,8 +5,8 @@ function streamGeometry(geometry, stream) {
 }
 
 const streamObjectType = {
-  Feature(object, stream) {
-    streamGeometry(object.geometry, stream);
+  Feature({geometry}, stream) {
+    streamGeometry(geometry, stream);
   },
   FeatureCollection(object, stream) {
     const features = object.features;
@@ -30,8 +30,8 @@ var streamGeometryType = {
     const n = coordinates.length;
     while (++i < n) object = coordinates[i], stream.point(object[0], object[1], object[2]);
   },
-  LineString(object, stream) {
-    streamLine(object.coordinates, stream, 0);
+  LineString({coordinates}, stream) {
+    streamLine(coordinates, stream, 0);
   },
   MultiLineString(object, stream) {
     const coordinates = object.coordinates;
@@ -39,8 +39,8 @@ var streamGeometryType = {
     const n = coordinates.length;
     while (++i < n) streamLine(coordinates[i], stream, 0);
   },
-  Polygon(object, stream) {
-    streamPolygon(object.coordinates, stream);
+  Polygon({coordinates}, stream) {
+    streamPolygon(coordinates, stream);
   },
   MultiPolygon(object, stream) {
     const coordinates = object.coordinates;
