@@ -5,7 +5,7 @@ export function spherical(cartesian) {
 }
 
 export function cartesian(spherical) {
-  var lambda = spherical[0], phi = spherical[1], cosPhi = cos(phi);
+  const lambda = spherical[0], phi = spherical[1], cosPhi = cos(phi);
   return [cosPhi * cos(lambda), cosPhi * sin(lambda), sin(phi)];
 }
 
@@ -28,6 +28,6 @@ export function cartesianScale(vector, k) {
 
 // TODO return d
 export function cartesianNormalizeInPlace(d) {
-  var l = sqrt(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
+  const l = sqrt(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
   d[0] /= l, d[1] /= l, d[2] /= l;
 }

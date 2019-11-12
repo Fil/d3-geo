@@ -12,8 +12,18 @@ function scaleTranslate(kx, ky, tx, ty) {
 }
 
 export default function() {
-  var k = 1, tx = 0, ty = 0, sx = 1, sy = 1, transform = identity, // scale, translate and reflect
-      x0 = null, y0, x1, y1, // clip extent
+  let k = 1,
+      tx = 0,
+      ty = 0,
+      sx = 1,
+      sy = 1,
+      // scale, translate and reflect
+      transform = identity,
+      x0 = null,
+      y0,
+      x1,
+      // clip extent
+      y1,
       postclip = identity,
       cache,
       cacheStream,

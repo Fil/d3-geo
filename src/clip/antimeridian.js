@@ -12,10 +12,7 @@ export default clip(
 // intersections or the line was empty; 1 - no intersections; 2 - there were
 // intersections, and the first and last segments should be rejoined.
 function clipAntimeridianLine(stream) {
-  var lambda0 = NaN,
-      phi0 = NaN,
-      sign0 = NaN,
-      clean; // no intersections
+  let lambda0 = NaN, phi0 = NaN, sign0 = NaN, clean; // no intersections
 
   return {
     lineStart() {
@@ -23,8 +20,7 @@ function clipAntimeridianLine(stream) {
       clean = 1;
     },
     point(lambda1, phi1) {
-      var sign1 = lambda1 > 0 ? pi : -pi,
-          delta = abs(lambda1 - lambda0);
+      const sign1 = lambda1 > 0 ? pi : -pi, delta = abs(lambda1 - lambda0);
       if (abs(delta - pi) < epsilon) { // line crosses a pole
         stream.point(lambda0, phi0 = (phi0 + phi1) / 2 > 0 ? halfPi : -halfPi);
         stream.point(sign0, phi0);
@@ -57,9 +53,9 @@ function clipAntimeridianLine(stream) {
 }
 
 function clipAntimeridianIntersect(lambda0, phi0, lambda1, phi1) {
-  var cosPhi0,
-      cosPhi1,
-      sinLambda0Lambda1 = sin(lambda0 - lambda1);
+  let cosPhi0;
+  let cosPhi1;
+  const sinLambda0Lambda1 = sin(lambda0 - lambda1);
   return abs(sinLambda0Lambda1) > epsilon
       ? atan((sin(phi0) * (cosPhi1 = cos(phi1)) * sin(lambda1)
           - sin(phi1) * (cosPhi0 = cos(phi0)) * sin(lambda0))
@@ -68,7 +64,7 @@ function clipAntimeridianIntersect(lambda0, phi0, lambda1, phi1) {
 }
 
 function clipAntimeridianInterpolate(from, to, direction, stream) {
-  var phi;
+  let phi;
   if (from == null) {
     phi = direction * halfPi;
     stream.point(-pi, phi);
@@ -81,7 +77,7 @@ function clipAntimeridianInterpolate(from, to, direction, stream) {
     stream.point(-pi, 0);
     stream.point(-pi, phi);
   } else if (abs(from[0] - to[0]) > epsilon) {
-    var lambda = from[0] < to[0] ? pi : -pi;
+    const lambda = from[0] < to[0] ? pi : -pi;
     phi = direction * lambda / 2;
     stream.point(-lambda, phi);
     stream.point(0, phi);

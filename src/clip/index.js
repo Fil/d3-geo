@@ -6,15 +6,15 @@ import {merge} from "d3-array";
 
 export default function(pointVisible, clipLine, interpolate, start) {
   return sink => {
-    var line = clipLine(sink),
-        ringBuffer = clipBuffer(),
-        ringSink = clipLine(ringBuffer),
-        polygonStarted = false,
-        polygon,
-        segments,
-        ring;
+    const line = clipLine(sink);
+    const ringBuffer = clipBuffer();
+    const ringSink = clipLine(ringBuffer);
+    let polygonStarted = false;
+    let polygon;
+    let segments;
+    let ring;
 
-    var clip = {
+    const clip = {
       point,
       lineStart,
       lineEnd,
@@ -30,7 +30,7 @@ export default function(pointVisible, clipLine, interpolate, start) {
         clip.lineStart = lineStart;
         clip.lineEnd = lineEnd;
         segments = merge(segments);
-        var startInside = polygonContains(polygon, start);
+        const startInside = polygonContains(polygon, start);
         if (segments.length) {
           if (!polygonStarted) sink.polygonStart(), polygonStarted = true;
           clipRejoin(segments, compareIntersection, startInside, interpolate, sink);
@@ -84,11 +84,13 @@ export default function(pointVisible, clipLine, interpolate, start) {
       pointRing(ring[0][0], ring[0][1]);
       ringSink.lineEnd();
 
-      var clean = ringSink.clean(),
-          ringSegments = ringBuffer.result(),
-          i, n = ringSegments.length, m,
-          segment,
-          point;
+      const clean = ringSink.clean();
+      const ringSegments = ringBuffer.result();
+      let i;
+      const n = ringSegments.length;
+      let m;
+      let segment;
+      let point;
 
       ring.pop();
       polygon.push(ring);

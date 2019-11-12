@@ -1,18 +1,15 @@
 import noop from "../noop.js";
 
-var x0 = Infinity,
-    y0 = x0,
-    x1 = -x0,
-    y1 = x1;
+let x0 = Infinity, y0 = x0, x1 = -x0, y1 = x1;
 
-var boundsStream = {
+const boundsStream = {
   point: boundsPoint,
   lineStart: noop,
   lineEnd: noop,
   polygonStart: noop,
   polygonEnd: noop,
   result() {
-    var bounds = [[x0, y0], [x1, y1]];
+    const bounds = [[x0, y0], [x1, y1]];
     x1 = y1 = -(y0 = x0 = Infinity);
     return bounds;
   }

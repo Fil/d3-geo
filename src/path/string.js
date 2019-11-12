@@ -42,7 +42,7 @@ PathString.prototype = {
   },
   result() {
     if (this._string.length) {
-      var result = this._string.join("");
+      const result = this._string.join("");
       this._string = [];
       return result;
     } else {

@@ -6,8 +6,8 @@ export default function(methods) {
 
 export function transformer(methods) {
   return stream => {
-    var s = new TransformStream;
-    for (var key in methods) s[key] = methods[key];
+    const s = new TransformStream;
+    for (const key in methods) s[key] = methods[key];
     s.stream = stream;
     return s;
   };

@@ -2,18 +2,20 @@ import {default as polygonContains} from "./polygonContains.js";
 import {default as distance} from "./distance.js";
 import {epsilon2, radians} from "./math.js";
 
-var containsObjectType = {
+const containsObjectType = {
   Feature(object, point) {
     return containsGeometry(object.geometry, point);
   },
   FeatureCollection(object, point) {
-    var features = object.features, i = -1, n = features.length;
+    const features = object.features;
+    let i = -1;
+    const n = features.length;
     while (++i < n) if (containsGeometry(features[i].geometry, point)) return true;
     return false;
   }
 };
 
-var containsGeometryType = {
+const containsGeometryType = {
   Sphere() {
     return true;
   },
@@ -21,7 +23,9 @@ var containsGeometryType = {
     return containsPoint(object.coordinates, point);
   },
   MultiPoint(object, point) {
-    var coordinates = object.coordinates, i = -1, n = coordinates.length;
+    const coordinates = object.coordinates;
+    let i = -1;
+    const n = coordinates.length;
     while (++i < n) if (containsPoint(coordinates[i], point)) return true;
     return false;
   },
@@ -29,7 +33,9 @@ var containsGeometryType = {
     return containsLine(object.coordinates, point);
   },
   MultiLineString(object, point) {
-    var coordinates = object.coordinates, i = -1, n = coordinates.length;
+    const coordinates = object.coordinates;
+    let i = -1;
+    const n = coordinates.length;
     while (++i < n) if (containsLine(coordinates[i], point)) return true;
     return false;
   },
@@ -37,12 +43,16 @@ var containsGeometryType = {
     return containsPolygon(object.coordinates, point);
   },
   MultiPolygon(object, point) {
-    var coordinates = object.coordinates, i = -1, n = coordinates.length;
+    const coordinates = object.coordinates;
+    let i = -1;
+    const n = coordinates.length;
     while (++i < n) if (containsPolygon(coordinates[i], point)) return true;
     return false;
   },
   GeometryCollection(object, point) {
-    var geometries = object.geometries, i = -1, n = geometries.length;
+    const geometries = object.geometries;
+    let i = -1;
+    const n = geometries.length;
     while (++i < n) if (containsGeometry(geometries[i], point)) return true;
     return false;
   }
@@ -59,8 +69,8 @@ function containsPoint(coordinates, point) {
 }
 
 function containsLine(coordinates, point) {
-  var ao, bo, ab;
-  for (var i = 0, n = coordinates.length; i < n; i++) {
+  let ao, bo, ab;
+  for (let i = 0, n = coordinates.length; i < n; i++) {
     bo = distance(coordinates[i], point);
     if (bo === 0) return true;
     if (i > 0) {

@@ -4,12 +4,14 @@ function streamGeometry(geometry, stream) {
   }
 }
 
-var streamObjectType = {
+const streamObjectType = {
   Feature(object, stream) {
     streamGeometry(object.geometry, stream);
   },
   FeatureCollection(object, stream) {
-    var features = object.features, i = -1, n = features.length;
+    const features = object.features;
+    let i = -1;
+    const n = features.length;
     while (++i < n) streamGeometry(features[i].geometry, stream);
   }
 };
@@ -23,38 +25,49 @@ var streamGeometryType = {
     stream.point(object[0], object[1], object[2]);
   },
   MultiPoint(object, stream) {
-    var coordinates = object.coordinates, i = -1, n = coordinates.length;
+    const coordinates = object.coordinates;
+    let i = -1;
+    const n = coordinates.length;
     while (++i < n) object = coordinates[i], stream.point(object[0], object[1], object[2]);
   },
   LineString(object, stream) {
     streamLine(object.coordinates, stream, 0);
   },
   MultiLineString(object, stream) {
-    var coordinates = object.coordinates, i = -1, n = coordinates.length;
+    const coordinates = object.coordinates;
+    let i = -1;
+    const n = coordinates.length;
     while (++i < n) streamLine(coordinates[i], stream, 0);
   },
   Polygon(object, stream) {
     streamPolygon(object.coordinates, stream);
   },
   MultiPolygon(object, stream) {
-    var coordinates = object.coordinates, i = -1, n = coordinates.length;
+    const coordinates = object.coordinates;
+    let i = -1;
+    const n = coordinates.length;
     while (++i < n) streamPolygon(coordinates[i], stream);
   },
   GeometryCollection(object, stream) {
-    var geometries = object.geometries, i = -1, n = geometries.length;
+    const geometries = object.geometries;
+    let i = -1;
+    const n = geometries.length;
     while (++i < n) streamGeometry(geometries[i], stream);
   }
 };
 
 function streamLine(coordinates, stream, closed) {
-  var i = -1, n = coordinates.length - closed, coordinate;
+  let i = -1;
+  const n = coordinates.length - closed;
+  let coordinate;
   stream.lineStart();
   while (++i < n) coordinate = coordinates[i], stream.point(coordinate[0], coordinate[1], coordinate[2]);
   stream.lineEnd();
 }
 
 function streamPolygon(coordinates, stream) {
-  var i = -1, n = coordinates.length;
+  let i = -1;
+  const n = coordinates.length;
   stream.polygonStart();
   while (++i < n) streamLine(coordinates[i], stream, 1);
   stream.polygonEnd();

@@ -2,14 +2,14 @@ import adder from "../adder.js";
 import {sqrt} from "../math.js";
 import noop from "../noop.js";
 
-var lengthSum = adder(),
-    lengthRing,
-    x00,
-    y00,
-    x0,
-    y0;
+const lengthSum = adder();
+let lengthRing;
+let x00;
+let y00;
+let x0;
+let y0;
 
-var lengthStream = {
+const lengthStream = {
   point: noop,
   lineStart() {
     lengthStream.point = lengthPointFirst;
@@ -25,7 +25,7 @@ var lengthStream = {
     lengthRing = null;
   },
   result() {
-    var length = +lengthSum;
+    const length = +lengthSum;
     lengthSum.reset();
     return length;
   }

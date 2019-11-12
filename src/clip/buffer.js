@@ -1,8 +1,7 @@
 import noop from "../noop.js";
 
 export default function() {
-  var lines = [],
-      line;
+  let lines = [], line;
   return {
     point(x, y) {
       line.push([x, y]);
@@ -15,7 +14,7 @@ export default function() {
       if (lines.length > 1) lines.push(lines.pop().concat(lines.shift()));
     },
     result() {
-      var result = lines;
+      const result = lines;
       lines = [];
       line = null;
       return result;

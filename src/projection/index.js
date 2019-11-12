@@ -9,7 +9,7 @@ import {transformer} from "../transform.js";
 import {fitExtent, fitSize, fitWidth, fitHeight} from "./fit.js";
 import resample from "./resample.js";
 
-var transformRadians = transformer({
+const transformRadians = transformer({
   point(x, y) {
     this.stream.point(x * radians, y * radians);
   }
@@ -18,7 +18,7 @@ var transformRadians = transformer({
 function transformRotate(rotate) {
   return transformer({
     point(x, y) {
-      var r = rotate(x, y);
+      const r = rotate(x, y);
       return this.stream.point(r[0], r[1]);
     }
   });
@@ -33,14 +33,7 @@ function scaleTranslate(k, dx, dy) {
 }
 
 function scaleTranslateRotate(k, dx, dy, alpha) {
-  var cosAlpha = cos(alpha),
-      sinAlpha = sin(alpha),
-      a = cosAlpha * k,
-      b = sinAlpha * k,
-      ai = cosAlpha / k,
-      bi = sinAlpha / k,
-      ci = (sinAlpha * dy - cosAlpha * dx) / k,
-      fi = (sinAlpha * dx + cosAlpha * dy) / k;
+  const cosAlpha = cos(alpha), sinAlpha = sin(alpha), a = cosAlpha * k, b = sinAlpha * k, ai = cosAlpha / k, bi = sinAlpha / k, ci = (sinAlpha * dy - cosAlpha * dx) / k, fi = (sinAlpha * dx + cosAlpha * dy) / k;
   function transform(x, y) {
     return [a * x - b * y + dx, dy - b * x - a * y];
   }
@@ -53,15 +46,33 @@ export default function projection(project) {
 }
 
 export function projectionMutator(projectAt) {
-  var project,
-      k = 150, // scale
-      x = 480, y = 250, // translate
-      lambda = 0, phi = 0, // center
-      deltaLambda = 0, deltaPhi = 0, deltaGamma = 0, rotate, // pre-rotate
-      alpha = 0, // post-rotate
-      theta = null, preclip = clipAntimeridian, // pre-clip angle
-      x0 = null, y0, x1, y1, postclip = identity, // post-clip extent
-      delta2 = 0.5, // precision
+  let project,
+      // scale
+      k = 150,
+      x = 480,
+      // translate
+      y = 250,
+      lambda = 0,
+      // center
+      phi = 0,
+      deltaLambda = 0,
+      deltaPhi = 0,
+      deltaGamma = 0,
+      // pre-rotate
+      rotate,
+      // post-rotate
+      alpha = 0,
+      theta = null,
+      // pre-clip angle
+      preclip = clipAntimeridian,
+      x0 = null,
+      y0,
+      x1,
+      y1,
+      // post-clip extent
+      postclip = identity,
+      // precision
+      delta2 = 0.5,
       projectResample,
       projectTransform,
       projectRotateTransform,
@@ -128,8 +139,7 @@ export function projectionMutator(projectAt) {
   projection.fitHeight = (height, object) => fitHeight(projection, height, object);
 
   function recenter() {
-    var center = scaleTranslateRotate(k, 0, 0, alpha).apply(null, project(lambda, phi)),
-        transform = (alpha ? scaleTranslateRotate : scaleTranslate)(k, x - center[0], y - center[1], alpha);
+    const center = scaleTranslateRotate(k, 0, 0, alpha).apply(null, project(lambda, phi)), transform = (alpha ? scaleTranslateRotate : scaleTranslate)(k, x - center[0], y - center[1], alpha);
     rotate = rotateRadians(deltaLambda, deltaPhi, deltaGamma);
     projectTransform = compose(project, transform);
     projectRotateTransform = compose(rotate, projectTransform);

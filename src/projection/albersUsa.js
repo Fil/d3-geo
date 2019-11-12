@@ -6,14 +6,14 @@ import {fitExtent, fitSize, fitWidth, fitHeight} from "./fit.js";
 // The projections must have mutually exclusive clip regions on the sphere,
 // as this will avoid emitting interleaving lines and polygons.
 function multiplex(streams) {
-  var n = streams.length;
+  const n = streams.length;
   return {
-    point(x, y) { var i = -1; while (++i < n) streams[i].point(x, y); },
-    sphere() { var i = -1; while (++i < n) streams[i].sphere(); },
-    lineStart() { var i = -1; while (++i < n) streams[i].lineStart(); },
-    lineEnd() { var i = -1; while (++i < n) streams[i].lineEnd(); },
-    polygonStart() { var i = -1; while (++i < n) streams[i].polygonStart(); },
-    polygonEnd() { var i = -1; while (++i < n) streams[i].polygonEnd(); }
+    point(x, y) { let i = -1; while (++i < n) streams[i].point(x, y); },
+    sphere() { let i = -1; while (++i < n) streams[i].sphere(); },
+    lineStart() { let i = -1; while (++i < n) streams[i].lineStart(); },
+    lineEnd() { let i = -1; while (++i < n) streams[i].lineEnd(); },
+    polygonStart() { let i = -1; while (++i < n) streams[i].polygonStart(); },
+    polygonEnd() { let i = -1; while (++i < n) streams[i].polygonEnd(); }
   };
 }
 
@@ -23,15 +23,25 @@ function multiplex(streams) {
 // parallels for each region comes from USGS, which is published here:
 // http://egsc.usgs.gov/isb/pubs/MapProjections/projections.html#albers
 export default function() {
-  var cache,
-      cacheStream,
-      lower48 = albers(), lower48Point,
-      alaska = conicEqualArea().rotate([154, 0]).center([-2, 58.5]).parallels([55, 65]), alaskaPoint, // EPSG:3338
-      hawaii = conicEqualArea().rotate([157, 0]).center([-3, 19.9]).parallels([8, 18]), hawaiiPoint, // ESRI:102007
-      point, pointStream = {point(x, y) { point = [x, y]; }};
+  let cache;
+  let cacheStream;
+  const lower48 = albers();
+  let lower48Point;
+  const alaska = conicEqualArea().rotate([154, 0]).center([-2, 58.5]).parallels([55, 65]);
+
+  let // EPSG:3338
+  alaskaPoint;
+
+  const hawaii = conicEqualArea().rotate([157, 0]).center([-3, 19.9]).parallels([8, 18]);
+
+  let // ESRI:102007
+  hawaiiPoint;
+
+  let point;
+  const pointStream = {point(x, y) { point = [x, y]; }};
 
   function albersUsa(coordinates) {
-    var x = coordinates[0], y = coordinates[1];
+    const x = coordinates[0], y = coordinates[1];
     return point = null,
         (lower48Point.point(x, y), point)
         || (alaskaPoint.point(x, y), point)
@@ -39,10 +49,7 @@ export default function() {
   }
 
   albersUsa.invert = coordinates => {
-    var k = lower48.scale(),
-        t = lower48.translate(),
-        x = (coordinates[0] - t[0]) / k,
-        y = (coordinates[1] - t[1]) / k;
+    const k = lower48.scale(), t = lower48.translate(), x = (coordinates[0] - t[0]) / k, y = (coordinates[1] - t[1]) / k;
     return (y >= 0.120 && y < 0.234 && x >= -0.425 && x < -0.214 ? alaska
         : y >= 0.166 && y < 0.234 && x >= -0.214 && x < -0.115 ? hawaii
         : lower48).invert(coordinates);
@@ -64,7 +71,7 @@ export default function() {
 
   albersUsa.translate = function(_) {
     if (!arguments.length) return lower48.translate();
-    var k = lower48.scale(), x = +_[0], y = +_[1];
+    const k = lower48.scale(), x = +_[0], y = +_[1];
 
     lower48Point = lower48
         .translate(_)

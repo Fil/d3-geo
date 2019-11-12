@@ -13,14 +13,17 @@ function Intersection(point, points, other, entry) {
 // into its visible line segments, and rejoins the segments by interpolating
 // along the clip edge.
 export default function(segments, compareIntersection, startInside, interpolate, stream) {
-  var subject = [],
-      clip = [],
-      i,
-      n;
+  const subject = [];
+  const clip = [];
+  let i;
+  let n;
 
   segments.forEach(segment => {
     if ((n = segment.length - 1) <= 0) return;
-    var n, p0 = segment[0], p1 = segment[n], x;
+    var n;
+    let p0 = segment[0];
+    const p1 = segment[n];
+    let x;
 
     // If the first and last points of a segment are coincident, then treat as a
     // closed ring. TODO if all rings are closed, then the winding order of the
@@ -48,14 +51,13 @@ export default function(segments, compareIntersection, startInside, interpolate,
     clip[i].e = startInside = !startInside;
   }
 
-  var start = subject[0],
-      points,
-      point;
+  const start = subject[0];
+  let points;
+  let point;
 
   while (1) {
     // Find first unvisited intersection.
-    var current = start,
-        isSubject = true;
+    let current = start, isSubject = true;
     while (current.v) if ((current = current.n) === start) return;
     points = current.z;
     stream.lineStart();
@@ -87,10 +89,10 @@ export default function(segments, compareIntersection, startInside, interpolate,
 
 function link(array) {
   if (!(n = array.length)) return;
-  var n,
-      i = 0,
-      a = array[0],
-      b;
+  var n;
+  let i = 0;
+  let a = array[0];
+  let b;
   while (++i < n) {
     a.n = b = array[i];
     b.p = a;

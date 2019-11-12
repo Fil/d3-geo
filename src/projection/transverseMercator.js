@@ -8,9 +8,7 @@ export function transverseMercatorRaw(lambda, phi) {
 transverseMercatorRaw.invert = (x, y) => [-y, 2 * atan(exp(x)) - halfPi];
 
 export default function() {
-  var m = mercatorProjection(transverseMercatorRaw),
-      center = m.center,
-      rotate = m.rotate;
+  const m = mercatorProjection(transverseMercatorRaw), center = m.center, rotate = m.rotate;
 
   m.center = function(_) {
     return arguments.length ? center([-_[1], _[0]]) : (_ = center(), [_[1], -_[0]]);

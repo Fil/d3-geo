@@ -2,21 +2,9 @@ import {sqrt} from "../math.js";
 
 // TODO Enforce positive area for exterior, negative area for interior?
 
-var X0 = 0,
-    Y0 = 0,
-    Z0 = 0,
-    X1 = 0,
-    Y1 = 0,
-    Z1 = 0,
-    X2 = 0,
-    Y2 = 0,
-    Z2 = 0,
-    x00,
-    y00,
-    x0,
-    y0;
+let X0 = 0, Y0 = 0, Z0 = 0, X1 = 0, Y1 = 0, Z1 = 0, X2 = 0, Y2 = 0, Z2 = 0, x00, y00, x0, y0;
 
-var centroidStream = {
+const centroidStream = {
   point: centroidPoint,
   lineStart: centroidLineStart,
   lineEnd: centroidLineEnd,
@@ -30,7 +18,7 @@ var centroidStream = {
     centroidStream.lineEnd = centroidLineEnd;
   },
   result() {
-    var centroid = Z2 ? [X2 / Z2, Y2 / Z2]
+    const centroid = Z2 ? [X2 / Z2, Y2 / Z2]
         : Z1 ? [X1 / Z1, Y1 / Z1]
         : Z0 ? [X0 / Z0, Y0 / Z0]
         : [NaN, NaN];
@@ -57,7 +45,7 @@ function centroidPointFirstLine(x, y) {
 }
 
 function centroidPointLine(x, y) {
-  var dx = x - x0, dy = y - y0, z = sqrt(dx * dx + dy * dy);
+  const dx = x - x0, dy = y - y0, z = sqrt(dx * dx + dy * dy);
   X1 += z * (x0 + x) / 2;
   Y1 += z * (y0 + y) / 2;
   Z1 += z;
@@ -82,9 +70,9 @@ function centroidPointFirstRing(x, y) {
 }
 
 function centroidPointRing(x, y) {
-  var dx = x - x0,
-      dy = y - y0,
-      z = sqrt(dx * dx + dy * dy);
+  const dx = x - x0;
+  const dy = y - y0;
+  let z = sqrt(dx * dx + dy * dy);
 
   X1 += z * (x0 + x) / 2;
   Y1 += z * (y0 + y) / 2;

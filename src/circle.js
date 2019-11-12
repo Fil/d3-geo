@@ -6,9 +6,7 @@ import {rotateRadians} from "./rotation.js";
 // Generates a circle centered at [0°, 0°], with a given radius and precision.
 export function circleStream(stream, radius, delta, direction, t0, t1) {
   if (!delta) return;
-  var cosRadius = cos(radius),
-      sinRadius = sin(radius),
-      step = direction * delta;
+  const cosRadius = cos(radius), sinRadius = sin(radius), step = direction * delta;
   if (t0 == null) {
     t0 = radius + direction * tau;
     t1 = radius - step / 2;
@@ -17,7 +15,7 @@ export function circleStream(stream, radius, delta, direction, t0, t1) {
     t1 = circleRadius(cosRadius, t1);
     if (direction > 0 ? t0 < t1 : t0 > t1) t0 += direction * tau;
   }
-  for (var point, t = t0; direction > 0 ? t > t1 : t < t1; t -= step) {
+  for (let point, t = t0; direction > 0 ? t > t1 : t < t1; t -= step) {
     point = spherical([cosRadius, -sinRadius * cos(t), -sinRadius * sin(t)]);
     stream.point(point[0], point[1]);
   }
@@ -27,17 +25,17 @@ export function circleStream(stream, radius, delta, direction, t0, t1) {
 function circleRadius(cosRadius, point) {
   point = cartesian(point), point[0] -= cosRadius;
   cartesianNormalizeInPlace(point);
-  var radius = acos(-point[1]);
+  const radius = acos(-point[1]);
   return ((-point[2] < 0 ? -radius : radius) + tau - epsilon) % tau;
 }
 
 export default function() {
-  var center = constant([0, 0]),
-      radius = constant(90),
-      precision = constant(6),
-      ring,
-      rotate,
-      stream = {point};
+  let center = constant([0, 0]);
+  let radius = constant(90);
+  let precision = constant(6);
+  let ring;
+  let rotate;
+  const stream = {point};
 
   function point(x, y) {
     ring.push(x = rotate(x, y));
@@ -45,9 +43,9 @@ export default function() {
   }
 
   function circle(...args) {
-    var c = center.apply(this, args),
-        r = radius.apply(this, args) * radians,
-        p = precision.apply(this, args) * radians;
+    let c = center.apply(this, args);
+    const r = radius.apply(this, args) * radians;
+    const p = precision.apply(this, args) * radians;
     ring = [];
     rotate = rotateRadians(-c[0] * radians, -c[1] * radians, 0).invert;
     circleStream(stream, r, p, 1);

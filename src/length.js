@@ -3,12 +3,12 @@ import {abs, atan2, cos, radians, sin, sqrt} from "./math.js";
 import noop from "./noop.js";
 import stream from "./stream.js";
 
-var lengthSum = adder(),
-    lambda0,
-    sinPhi0,
-    cosPhi0;
+const lengthSum = adder();
+let lambda0;
+let sinPhi0;
+let cosPhi0;
 
-var lengthStream = {
+const lengthStream = {
   sphere: noop,
   point: noop,
   lineStart: lengthLineStart,
@@ -34,14 +34,7 @@ function lengthPointFirst(lambda, phi) {
 
 function lengthPoint(lambda, phi) {
   lambda *= radians, phi *= radians;
-  var sinPhi = sin(phi),
-      cosPhi = cos(phi),
-      delta = abs(lambda - lambda0),
-      cosDelta = cos(delta),
-      sinDelta = sin(delta),
-      x = cosPhi * sinDelta,
-      y = cosPhi0 * sinPhi - sinPhi0 * cosPhi * cosDelta,
-      z = sinPhi0 * sinPhi + cosPhi0 * cosPhi * cosDelta;
+  const sinPhi = sin(phi), cosPhi = cos(phi), delta = abs(lambda - lambda0), cosDelta = cos(delta), sinDelta = sin(delta), x = cosPhi * sinDelta, y = cosPhi0 * sinPhi - sinPhi0 * cosPhi * cosDelta, z = sinPhi0 * sinPhi + cosPhi0 * cosPhi * cosDelta;
   lengthSum.add(atan2(sqrt(x * x + y * y), z));
   lambda0 = lambda, sinPhi0 = sinPhi, cosPhi0 = cosPhi;
 }

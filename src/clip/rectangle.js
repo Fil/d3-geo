@@ -4,7 +4,7 @@ import clipLine from "./line.js";
 import clipRejoin from "./rejoin.js";
 import {merge} from "d3-array";
 
-var clipMax = 1e9, clipMin = -clipMax;
+const clipMax = 1e9, clipMin = -clipMax;
 
 // TODO Use d3-polygon’s polygonContains here for the ring check?
 // TODO Eliminate duplicate buffering in clipBuffer and polygon.push?
@@ -16,7 +16,7 @@ export default function clipRectangle(x0, y0, x1, y1) {
   }
 
   function interpolate(from, to, direction, stream) {
-    var a = 0, a1 = 0;
+    let a = 0, a1 = 0;
     if (from == null
         || (a = corner(from, direction)) !== (a1 = corner(to, direction))
         || comparePoint(from, to) < 0 ^ direction > 0) {
@@ -39,8 +39,7 @@ export default function clipRectangle(x0, y0, x1, y1) {
   }
 
   function comparePoint(a, b) {
-    var ca = corner(a, 1),
-        cb = corner(b, 1);
+    const ca = corner(a, 1), cb = corner(b, 1);
     return ca !== cb ? ca - cb
         : ca === 0 ? b[1] - a[1]
         : ca === 1 ? a[0] - b[0]
@@ -49,17 +48,27 @@ export default function clipRectangle(x0, y0, x1, y1) {
   }
 
   return stream => {
-    var activeStream = stream,
-        bufferStream = clipBuffer(),
-        segments,
-        polygon,
-        ring,
-        x__, y__, v__, // first point
-        x_, y_, v_, // previous point
-        first,
-        clean;
+    let activeStream = stream;
+    const bufferStream = clipBuffer();
+    let segments;
+    let polygon;
+    let ring;
+    let x__;
+    let y__;
 
-    var clipStream = {
+    let // first point
+    v__;
+
+    let x_;
+    let y_;
+
+    let // previous point
+    v_;
+
+    let first;
+    let clean;
+
+    const clipStream = {
       point,
       lineStart,
       lineEnd,
@@ -72,10 +81,10 @@ export default function clipRectangle(x0, y0, x1, y1) {
     }
 
     function polygonInside() {
-      var winding = 0;
+      let winding = 0;
 
-      for (var i = 0, n = polygon.length; i < n; ++i) {
-        for (var ring = polygon[i], j = 1, m = ring.length, point = ring[0], a0, a1, b0 = point[0], b1 = point[1]; j < m; ++j) {
+      for (let i = 0, n = polygon.length; i < n; ++i) {
+        for (let ring = polygon[i], j = 1, m = ring.length, point = ring[0], a0, a1, b0 = point[0], b1 = point[1]; j < m; ++j) {
           a0 = b0, a1 = b1, point = ring[j], b0 = point[0], b1 = point[1];
           if (a1 <= y1) { if (b1 > y1 && (b0 - a0) * (y1 - a1) > (b1 - a1) * (x0 - a0)) ++winding; }
           else { if (b1 <= y1 && (b0 - a0) * (y1 - a1) < (b1 - a1) * (x0 - a0)) --winding; }
@@ -91,9 +100,7 @@ export default function clipRectangle(x0, y0, x1, y1) {
     }
 
     function polygonEnd() {
-      var startInside = polygonInside(),
-          cleanInside = clean && startInside,
-          visible = (segments = merge(segments)).length;
+      const startInside = polygonInside(), cleanInside = clean && startInside, visible = (segments = merge(segments)).length;
       if (cleanInside || visible) {
         stream.polygonStart();
         if (cleanInside) {
@@ -131,7 +138,7 @@ export default function clipRectangle(x0, y0, x1, y1) {
     }
 
     function linePoint(x, y) {
-      var v = visible(x, y);
+      const v = visible(x, y);
       if (polygon) ring.push([x, y]);
       if (first) {
         x__ = x, y__ = y, v__ = v;
@@ -143,8 +150,7 @@ export default function clipRectangle(x0, y0, x1, y1) {
       } else {
         if (v && v_) activeStream.point(x, y);
         else {
-          var a = [x_ = Math.max(clipMin, Math.min(clipMax, x_)), y_ = Math.max(clipMin, Math.min(clipMax, y_))],
-              b = [x = Math.max(clipMin, Math.min(clipMax, x)), y = Math.max(clipMin, Math.min(clipMax, y))];
+          const a = [x_ = Math.max(clipMin, Math.min(clipMax, x_)), y_ = Math.max(clipMin, Math.min(clipMax, y_))], b = [x = Math.max(clipMin, Math.min(clipMax, x)), y = Math.max(clipMin, Math.min(clipMax, y))];
           if (clipLine(a, b, x0, y0, x1, y1)) {
             if (!v_) {
               activeStream.lineStart();

@@ -2,21 +2,17 @@ import {range} from "d3-array";
 import {abs, ceil, epsilon} from "./math.js";
 
 function graticuleX(y0, y1, dy) {
-  var y = range(y0, y1 - epsilon, dy).concat(y1);
+  const y = range(y0, y1 - epsilon, dy).concat(y1);
   return x => y.map(y => [x, y]);
 }
 
 function graticuleY(x0, x1, dx) {
-  var x = range(x0, x1 - epsilon, dx).concat(x1);
+  const x = range(x0, x1 - epsilon, dx).concat(x1);
   return y => x.map(x => [x, y]);
 }
 
 export default function graticule() {
-  var x1, x0, X1, X0,
-      y1, y0, Y1, Y0,
-      dx = 10, dy = dx, DX = 90, DY = 360,
-      x, y, X, Y,
-      precision = 2.5;
+  let x1, x0, X1, X0, y1, y0, Y1, Y0, dx = 10, dy = dx, DX = 90, DY = 360, x, y, X, Y, precision = 2.5;
 
   function graticule() {
     return {type: "MultiLineString", coordinates: lines()};

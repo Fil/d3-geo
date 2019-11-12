@@ -2,14 +2,25 @@ import {asin, atan2, cos, degrees, epsilon, epsilon2, radians, sin, sqrt} from "
 import noop from "./noop.js";
 import stream from "./stream.js";
 
-var W0, W1,
-    X0, Y0, Z0,
-    X1, Y1, Z1,
-    X2, Y2, Z2,
-    lambda00, phi00, // first point
-    x0, y0, z0; // previous point
+let W0,
+    W1,
+    X0,
+    Y0,
+    Z0,
+    X1,
+    Y1,
+    Z1,
+    X2,
+    Y2,
+    Z2,
+    lambda00,
+    // first point
+    phi00,
+    x0,
+    y0,
+    z0; // previous point
 
-var centroidStream = {
+const centroidStream = {
   sphere: noop,
   point: centroidPoint,
   lineStart: centroidLineStart,
@@ -27,7 +38,7 @@ var centroidStream = {
 // Arithmetic mean of Cartesian vectors.
 function centroidPoint(lambda, phi) {
   lambda *= radians, phi *= radians;
-  var cosPhi = cos(phi);
+  const cosPhi = cos(phi);
   centroidPointCartesian(cosPhi * cos(lambda), cosPhi * sin(lambda), sin(phi));
 }
 
@@ -44,7 +55,7 @@ function centroidLineStart() {
 
 function centroidLinePointFirst(lambda, phi) {
   lambda *= radians, phi *= radians;
-  var cosPhi = cos(phi);
+  const cosPhi = cos(phi);
   x0 = cosPhi * cos(lambda);
   y0 = cosPhi * sin(lambda);
   z0 = sin(phi);
@@ -54,11 +65,11 @@ function centroidLinePointFirst(lambda, phi) {
 
 function centroidLinePoint(lambda, phi) {
   lambda *= radians, phi *= radians;
-  var cosPhi = cos(phi),
-      x = cosPhi * cos(lambda),
-      y = cosPhi * sin(lambda),
-      z = sin(phi),
-      w = atan2(sqrt((w = y0 * z - z0 * y) * w + (w = z0 * x - x0 * z) * w + (w = x0 * y - y0 * x) * w), x0 * x + y0 * y + z0 * z);
+  const cosPhi = cos(phi);
+  const x = cosPhi * cos(lambda);
+  const y = cosPhi * sin(lambda);
+  const z = sin(phi);
+  let w = atan2(sqrt((w = y0 * z - z0 * y) * w + (w = z0 * x - x0 * z) * w + (w = x0 * y - y0 * x) * w), x0 * x + y0 * y + z0 * z);
   W1 += w;
   X1 += w * (x0 + (x0 = x));
   Y1 += w * (y0 + (y0 = y));
@@ -85,7 +96,7 @@ function centroidRingPointFirst(lambda, phi) {
   lambda00 = lambda, phi00 = phi;
   lambda *= radians, phi *= radians;
   centroidStream.point = centroidRingPoint;
-  var cosPhi = cos(phi);
+  const cosPhi = cos(phi);
   x0 = cosPhi * cos(lambda);
   y0 = cosPhi * sin(lambda);
   z0 = sin(phi);
@@ -94,16 +105,17 @@ function centroidRingPointFirst(lambda, phi) {
 
 function centroidRingPoint(lambda, phi) {
   lambda *= radians, phi *= radians;
-  var cosPhi = cos(phi),
-      x = cosPhi * cos(lambda),
-      y = cosPhi * sin(lambda),
-      z = sin(phi),
-      cx = y0 * z - z0 * y,
-      cy = z0 * x - x0 * z,
-      cz = x0 * y - y0 * x,
-      m = sqrt(cx * cx + cy * cy + cz * cz),
-      w = asin(m), // line weight = angle
-      v = m && -w / m; // area weight multiplier
+  const cosPhi = cos(phi),
+        x = cosPhi * cos(lambda),
+        y = cosPhi * sin(lambda),
+        z = sin(phi),
+        cx = y0 * z - z0 * y,
+        cy = z0 * x - x0 * z,
+        cz = x0 * y - y0 * x,
+        m = sqrt(cx * cx + cy * cy + cz * cz),
+        // line weight = angle
+        w = asin(m),
+        v = m && -w / m; // area weight multiplier
   X2 += v * cx;
   Y2 += v * cy;
   Z2 += v * cz;
@@ -121,10 +133,7 @@ export default function(object) {
   X2 = Y2 = Z2 = 0;
   stream(object, centroidStream);
 
-  var x = X2,
-      y = Y2,
-      z = Z2,
-      m = x * x + y * y + z * z;
+  let x = X2, y = Y2, z = Z2, m = x * x + y * y + z * z;
 
   // If the area-weighted ccentroid is undefined, fall back to length-weighted ccentroid.
   if (m < epsilon2) {

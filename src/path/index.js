@@ -8,9 +8,7 @@ import pathMeasure from "./measure.js";
 import PathString from "./string.js";
 
 export default function(projection, context) {
-  var pointRadius = 4.5,
-      projectionStream,
-      contextStream;
+  let pointRadius = 4.5, projectionStream, contextStream;
 
   function path(object) {
     if (object) {

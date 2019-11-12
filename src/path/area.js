@@ -2,14 +2,14 @@ import adder from "../adder.js";
 import {abs} from "../math.js";
 import noop from "../noop.js";
 
-var areaSum = adder(),
-    areaRingSum = adder(),
-    x00,
-    y00,
-    x0,
-    y0;
+const areaSum = adder();
+const areaRingSum = adder();
+let x00;
+let y00;
+let x0;
+let y0;
 
-var areaStream = {
+const areaStream = {
   point: noop,
   lineStart: noop,
   lineEnd: noop,
@@ -23,7 +23,7 @@ var areaStream = {
     areaRingSum.reset();
   },
   result() {
-    var area = areaSum / 2;
+    const area = areaSum / 2;
     areaSum.reset();
     return area;
   }

@@ -4,15 +4,29 @@ import {cartesian, cartesianCross, cartesianNormalizeInPlace, spherical} from ".
 import {abs, degrees, epsilon, radians} from "./math.js";
 import stream from "./stream.js";
 
-var lambda0, phi0, lambda1, phi1, // bounds
-    lambda2, // previous lambda-coordinate
-    lambda00, phi00, // first point
-    p0, // previous 3D point
-    deltaSum = adder(),
-    ranges,
-    range;
+let lambda0;
+let phi0;
+let lambda1;
 
-var boundsStream = {
+let // bounds
+phi1;
+
+let // previous lambda-coordinate
+lambda2;
+
+let lambda00;
+
+let // first point
+phi00;
+
+let // previous 3D point
+p0;
+
+const deltaSum = adder();
+let ranges;
+let range;
+
+const boundsStream = {
   point: boundsPoint,
   lineStart: boundsLineStart,
   lineEnd: boundsLineEnd,
@@ -45,18 +59,18 @@ function boundsPoint(lambda, phi) {
 }
 
 function linePoint(lambda, phi) {
-  var p = cartesian([lambda * radians, phi * radians]);
+  const p = cartesian([lambda * radians, phi * radians]);
   if (p0) {
-    var normal = cartesianCross(p0, p),
-        equatorial = [normal[1], -normal[0], 0],
-        inflection = cartesianCross(equatorial, normal);
+    const normal = cartesianCross(p0, p);
+    const equatorial = [normal[1], -normal[0], 0];
+    let inflection = cartesianCross(equatorial, normal);
     cartesianNormalizeInPlace(inflection);
     inflection = spherical(inflection);
-    var delta = lambda - lambda2,
-        sign = delta > 0 ? 1 : -1,
-        lambdai = inflection[0] * degrees * sign,
-        phii,
-        antimeridian = abs(delta) > 180;
+    const delta = lambda - lambda2;
+    const sign = delta > 0 ? 1 : -1;
+    let lambdai = inflection[0] * degrees * sign;
+    let phii;
+    const antimeridian = abs(delta) > 180;
     if (antimeridian ^ (sign * lambda2 < lambdai && lambdai < sign * lambda)) {
       phii = inflection[1] * degrees;
       if (phii > phi1) phi1 = phii;
@@ -105,7 +119,7 @@ function boundsLineEnd() {
 
 function boundsRingPoint(lambda, phi) {
   if (p0) {
-    var delta = lambda - lambda2;
+    const delta = lambda - lambda2;
     deltaSum.add(abs(delta) > 180 ? delta + (delta > 0 ? 360 : -360) : delta);
   } else {
     lambda00 = lambda, phi00 = phi;
@@ -142,7 +156,7 @@ function rangeContains(range, x) {
 }
 
 export default function(feature) {
-  var i, n, a, b, merged, deltaMax, delta;
+  let i, n, a, b, merged, deltaMax, delta;
 
   phi1 = lambda1 = -(lambda0 = phi0 = Infinity);
   ranges = [];

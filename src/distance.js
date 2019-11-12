@@ -1,7 +1,6 @@
 import length from "./length.js";
 
-var coordinates = [null, null],
-    object = {type: "LineString", coordinates};
+const coordinates = [null, null], object = {type: "LineString", coordinates};
 
 export default function(a, b) {
   coordinates[0] = a;

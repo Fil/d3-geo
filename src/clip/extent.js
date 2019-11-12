@@ -1,13 +1,7 @@
 import clipRectangle from "./rectangle.js";
 
 export default function() {
-  var x0 = 0,
-      y0 = 0,
-      x1 = 960,
-      y1 = 500,
-      cache,
-      cacheStream,
-      clip;
+  let x0 = 0, y0 = 0, x1 = 960, y1 = 500, cache, cacheStream, clip;
 
   return clip = {
     stream(stream) {

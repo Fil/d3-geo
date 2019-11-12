@@ -3,16 +3,16 @@ import {atan2, cos, quarterPi, radians, sin, tau} from "./math.js";
 import noop from "./noop.js";
 import stream from "./stream.js";
 
-export var areaRingSum = adder();
+export const areaRingSum = adder();
 
-var areaSum = adder(),
-    lambda00,
-    phi00,
-    lambda0,
-    cosPhi0,
-    sinPhi0;
+const areaSum = adder();
+let lambda00;
+let phi00;
+let lambda0;
+let cosPhi0;
+let sinPhi0;
 
-export var areaStream = {
+export const areaStream = {
   point: noop,
   lineStart: noop,
   lineEnd: noop,
@@ -22,7 +22,7 @@ export var areaStream = {
     areaStream.lineEnd = areaRingEnd;
   },
   polygonEnd() {
-    var areaRing = +areaRingSum;
+    const areaRing = +areaRingSum;
     areaSum.add(areaRing < 0 ? tau + areaRing : areaRing);
     this.lineStart = this.lineEnd = this.point = noop;
   },
@@ -53,14 +53,7 @@ function areaPoint(lambda, phi) {
   // Spherical excess E for a spherical triangle with vertices: south pole,
   // previous point, current point.  Uses a formula derived from Cagnoli’s
   // theorem.  See Todhunter, Spherical Trig. (1871), Sec. 103, Eq. (2).
-  var dLambda = lambda - lambda0,
-      sdLambda = dLambda >= 0 ? 1 : -1,
-      adLambda = sdLambda * dLambda,
-      cosPhi = cos(phi),
-      sinPhi = sin(phi),
-      k = sinPhi0 * sinPhi,
-      u = cosPhi0 * cosPhi + k * cos(adLambda),
-      v = k * sdLambda * sin(adLambda);
+  const dLambda = lambda - lambda0, sdLambda = dLambda >= 0 ? 1 : -1, adLambda = sdLambda * dLambda, cosPhi = cos(phi), sinPhi = sin(phi), k = sinPhi0 * sinPhi, u = cosPhi0 * cosPhi + k * cos(adLambda), v = k * sdLambda * sin(adLambda);
   areaRingSum.add(atan2(v, u));
 
   // Advance the previous points.

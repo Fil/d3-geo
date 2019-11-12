@@ -33,8 +33,6 @@ Adder.prototype = {
 var temp = new Adder;
 
 function add(adder, a, b) {
-  var x = adder.s = a + b,
-      bv = x - a,
-      av = x - bv;
+  const x = adder.s = a + b, bv = x - a, av = x - bv;
   adder.t = (a - av) + (b - bv);
 }

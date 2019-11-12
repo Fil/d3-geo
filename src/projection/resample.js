@@ -2,8 +2,9 @@ import {cartesian} from "../cartesian.js";
 import {abs, asin, atan2, cos, epsilon, radians, sqrt} from "../math.js";
 import {transformer} from "../transform.js";
 
-var maxDepth = 16, // maximum depth of subdivision
-    cosMinDistance = cos(30 * radians); // cos(minimum angular distance)
+const // maximum depth of subdivision
+      maxDepth = 16,
+      cosMinDistance = cos(30 * radians); // cos(minimum angular distance)
 
 export default function(project, delta2) {
   return +delta2 ? resample(project, delta2) : resampleNone(project);
@@ -21,22 +22,20 @@ function resampleNone(project) {
 function resample(project, delta2) {
 
   function resampleLineTo(x0, y0, lambda0, a0, b0, c0, x1, y1, lambda1, a1, b1, c1, depth, stream) {
-    var dx = x1 - x0,
-        dy = y1 - y0,
-        d2 = dx * dx + dy * dy;
+    const dx = x1 - x0, dy = y1 - y0, d2 = dx * dx + dy * dy;
     if (d2 > 4 * delta2 && depth--) {
-      var a = a0 + a1,
-          b = b0 + b1,
-          c = c0 + c1,
-          m = sqrt(a * a + b * b + c * c),
-          phi2 = asin(c /= m),
-          lambda2 = abs(abs(c) - 1) < epsilon || abs(lambda0 - lambda1) < epsilon ? (lambda0 + lambda1) / 2 : atan2(b, a),
-          p = project(lambda2, phi2),
-          x2 = p[0],
-          y2 = p[1],
-          dx2 = x2 - x0,
-          dy2 = y2 - y0,
-          dz = dy * dx2 - dx * dy2;
+      let a = a0 + a1;
+      let b = b0 + b1;
+      let c = c0 + c1;
+      const m = sqrt(a * a + b * b + c * c);
+      const phi2 = asin(c /= m);
+      const lambda2 = abs(abs(c) - 1) < epsilon || abs(lambda0 - lambda1) < epsilon ? (lambda0 + lambda1) / 2 : atan2(b, a);
+      const p = project(lambda2, phi2);
+      const x2 = p[0];
+      const y2 = p[1];
+      const dx2 = x2 - x0;
+      const dy2 = y2 - y0;
+      const dz = dy * dx2 - dx * dy2;
       if (dz * dz / d2 > delta2 // perpendicular projected distance
           || abs((dx * dx2 + dy * dy2) / d2 - 0.5) > 0.3 // midpoint close to an end
           || a0 * a1 + b0 * b1 + c0 * c1 < cosMinDistance) { // angular distance
@@ -47,10 +46,21 @@ function resample(project, delta2) {
     }
   }
   return stream => {
-    var lambda00, x00, y00, a00, b00, c00, // first point
-        lambda0, x0, y0, a0, b0, c0; // previous point
+    let lambda00,
+        x00,
+        y00,
+        a00,
+        b00,
+        // first point
+        c00,
+        lambda0,
+        x0,
+        y0,
+        a0,
+        b0,
+        c0; // previous point
 
-    var resampleStream = {
+    const resampleStream = {
       point,
       lineStart,
       lineEnd,
@@ -70,7 +80,7 @@ function resample(project, delta2) {
     }
 
     function linePoint(lambda, phi) {
-      var c = cartesian([lambda, phi]), p = project(lambda, phi);
+      const c = cartesian([lambda, phi]), p = project(lambda, phi);
       resampleLineTo(x0, y0, lambda0, a0, b0, c0, x0 = p[0], y0 = p[1], lambda0 = lambda, a0 = c[0], b0 = c[1], c0 = c[2], maxDepth, stream);
       stream.point(x0, y0);
     }
